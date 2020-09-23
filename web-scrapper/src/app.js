@@ -51,12 +51,12 @@ const getCourseData = async () =>
         // this is the font tag containing other font with the description in them 
 
         // above finds each of the tag texts. these are within the same parent as the provider so keep an eye out for issues there in case some tags are links. might be issues there.
+        //no issue found.
         let provider = $(el).find('div.row').find('div.course-details').find('div.course-tags').children('a').text().replace(/(\r\n)+|\r+|\n+|\t+/g, '')
         pageCourses.push({ courseName, provider, tags, description, price })
 
       });
 
-      // allCourses = [...allCourses, pageCourses]
       fs.appendFileSync('output.json', JSON.stringify(pageCourses), function (err)
       {
         if (err) return console.log(err);
@@ -93,7 +93,7 @@ app.use(cors());
 app.get("/", (req, res) =>
 {
   getCourseData()
-    .then((courseNames) => res.send("Hello, world!"));
+    .then((courseNames) => res.send(courseNames));
 });
 
 app.use(function errorHandler(error, req, res, next)
